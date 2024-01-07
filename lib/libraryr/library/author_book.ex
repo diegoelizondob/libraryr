@@ -5,7 +5,7 @@ defmodule Libraryr.Library.AuthorBook do
   schema "authors_books" do
 
     field :author_id, :id
-    field :book_id, :id
+    field :isbn, :string
   end
 
   @doc false

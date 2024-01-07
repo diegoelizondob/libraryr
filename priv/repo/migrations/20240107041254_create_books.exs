@@ -2,8 +2,8 @@ defmodule Libraryr.Repo.Migrations.CreateBooks do
   use Ecto.Migration
 
   def change do
-    create table(:books) do
-      add :isnb, :string, null: false
+    create table(:books, primary_key: false) do
+      add :isbn, :string, null: false, primary_key: true
       add :title, :string
       add :price, :decimal
 
