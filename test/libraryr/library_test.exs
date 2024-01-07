@@ -66,7 +66,7 @@ defmodule Libraryr.LibraryTest do
 
     import Libraryr.LibraryFixtures
 
-    @invalid_attrs %{title: nil, isnb: nil, price: nil}
+    @invalid_attrs %{title: nil, isbn: nil, price: nil}
 
     test "list_books/0 returns all books" do
       book = book_fixture()
@@ -75,15 +75,15 @@ defmodule Libraryr.LibraryTest do
 
     test "get_book!/1 returns the book with given id" do
       book = book_fixture()
-      assert Library.get_book!(book.id) == book
+      assert Library.get_book!(book.isbn) == book
     end
 
     test "create_book/1 with valid data creates a book" do
-      valid_attrs = %{title: "some title", isnb: "some isnb", price: "120.5"}
+      valid_attrs = %{title: "some title", isbn: "some isbn", price: "120.5"}
 
       assert {:ok, %Book{} = book} = Library.create_book(valid_attrs)
       assert book.title == "some title"
-      assert book.isnb == "some isnb"
+      assert book.isbn == "some isbn"
       assert book.price == Decimal.new("120.5")
     end
 
@@ -93,24 +93,24 @@ defmodule Libraryr.LibraryTest do
 
     test "update_book/2 with valid data updates the book" do
       book = book_fixture()
-      update_attrs = %{title: "some updated title", isnb: "some updated isnb", price: "456.7"}
+      update_attrs = %{title: "some updated title", isbn: "some updated isbn", price: "456.7"}
 
       assert {:ok, %Book{} = book} = Library.update_book(book, update_attrs)
       assert book.title == "some updated title"
-      assert book.isnb == "some updated isnb"
+      assert book.isbn == "some updated isbn"
       assert book.price == Decimal.new("456.7")
     end
 
     test "update_book/2 with invalid data returns error changeset" do
       book = book_fixture()
       assert {:error, %Ecto.Changeset{}} = Library.update_book(book, @invalid_attrs)
-      assert book == Library.get_book!(book.id)
+      assert book == Library.get_book!(book.isbn)
     end
 
     test "delete_book/1 deletes the book" do
       book = book_fixture()
       assert {:ok, %Book{}} = Library.delete_book(book)
-      assert_raise Ecto.NoResultsError, fn -> Library.get_book!(book.id) end
+      assert_raise Ecto.NoResultsError, fn -> Library.get_book!(book.isbn) end
     end
 
     test "change_book/1 returns a book changeset" do

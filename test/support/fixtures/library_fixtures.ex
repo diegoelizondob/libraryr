@@ -27,7 +27,7 @@ defmodule Libraryr.LibraryFixtures do
     {:ok, book} =
       attrs
       |> Enum.into(%{
-        isnb: "some isnb",
+        isbn: "some isbn",
         price: "120.5",
         title: "some title"
       })

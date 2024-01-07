@@ -2,10 +2,15 @@ defmodule Libraryr.Library.Book do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key false
+  @derive {Phoenix.Param, key: :isbn}
   schema "books" do
     field :title, :string
-    field :isnb, :string
+    field :isbn, :string, primary_key: true
     field :price, :decimal
+
+    many_to_many :authors, Libraryr.Library.Author, join_through: "authors_books",
+                  join_keys: [book_isbn: :isbn, author_id: :id]
 
     timestamps(type: :utc_datetime)
   end
@@ -13,7 +18,8 @@ defmodule Libraryr.Library.Book do
   @doc false
   def changeset(book, attrs) do
     book
-    |> cast(attrs, [:isnb, :title, :price])
-    |> validate_required([:isnb, :title, :price])
+    |> cast(attrs, [:isbn, :title, :price])
+    |> validate_required([:isbn, :title, :price])
+    |> unique_constraint(:isbn, name: "books_pkey")
   end
 end

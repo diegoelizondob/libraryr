@@ -1,5 +1,5 @@
 <.header>
-  Book <%= @book.id %>
+  Book <%= @book.isbn %>
   <:subtitle>This is a book record from your database.</:subtitle>
   <:actions>
     <.link href={~p"/books/#{@book}/edit"}>
@@ -9,7 +9,7 @@
 </.header>
 
 <.list>
-  <:item title="Isnb"><%= @book.isnb %></:item>
+  <:item title="Isnb"><%= @book.isbn %></:item>
   <:item title="Title"><%= @book.title %></:item>
   <:item title="Price"><%= @book.price %></:item>
 </.list>

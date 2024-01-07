@@ -3,9 +3,9 @@ defmodule LibraryrWeb.BookControllerTest do
 
   import Libraryr.LibraryFixtures
 
-  @create_attrs %{title: "some title", isnb: "some isnb", price: "120.5"}
-  @update_attrs %{title: "some updated title", isnb: "some updated isnb", price: "456.7"}
-  @invalid_attrs %{title: nil, isnb: nil, price: nil}
+  @create_attrs %{title: "some title", isbn: "some isbn", price: "120.5"}
+  @update_attrs %{title: "some updated title", isbn: "some updated isbn", price: "456.7"}
+  @invalid_attrs %{title: nil, isbn: nil, price: nil}
 
   describe "index" do
     test "lists all books", %{conn: conn} do
