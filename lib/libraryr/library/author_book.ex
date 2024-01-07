@@ -6,8 +6,6 @@ defmodule Libraryr.Library.AuthorBook do
 
     field :author_id, :id
     field :book_id, :id
-
-    timestamps(type: :utc_datetime)
   end
 
   @doc false

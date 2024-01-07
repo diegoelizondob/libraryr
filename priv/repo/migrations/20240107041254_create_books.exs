@@ -3,7 +3,7 @@ defmodule Libraryr.Repo.Migrations.CreateBooks do
 
   def change do
     create table(:books) do
-      add :isnb, :string
+      add :isnb, :string, null: false
       add :title, :string
       add :price, :decimal
 

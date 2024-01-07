@@ -3,10 +3,8 @@ defmodule Libraryr.Repo.Migrations.CreateAuthorsBooks do
 
   def change do
     create table(:authors_books) do
-      add :author_id, references(:posts, on_delete: :nothing)
-      add :book_id, references(:books, on_delete: :nothing)
-
-      timestamps(type: :utc_datetime)
+      add :author_id, references(:authors, on_delete: :nothing), null: false
+      add :book_id, references(:books, on_delete: :nothing), null: false
     end
 
     create index(:authors_books, [:author_id])
