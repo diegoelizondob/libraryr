@@ -10,7 +10,7 @@ defmodule LibraryrWeb.BookController do
   end
 
   def new(conn, _params) do
-    changeset = Library.change_book(%Book{})
+    changeset = Library.change_book(%Book{authors: []})
     render(conn, :new, changeset: changeset)
   end
 
@@ -27,7 +27,7 @@ defmodule LibraryrWeb.BookController do
   end
 
   def show(conn, %{"id" => id}) do
-    book = Library.get_book!(id)
+    book = Library.get_book_with_authors!(id)
     render(conn, :show, book: book)
   end
 

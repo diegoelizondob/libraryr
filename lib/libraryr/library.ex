@@ -6,7 +6,7 @@ defmodule Libraryr.Library do
   import Ecto.Query, warn: false
   alias Libraryr.Repo
 
-  alias Libraryr.Library.Author
+  alias Libraryr.Library.{Author, Book}
 
   @doc """
   Returns the list of authors.
@@ -114,7 +114,7 @@ defmodule Libraryr.Library do
 
   """
   def list_books do
-    Repo.all(Book)
+    Book |> preload(:authors) |> Repo.all()
   end
 
   @doc """
@@ -132,6 +132,7 @@ defmodule Libraryr.Library do
 
   """
   def get_book!(id), do: Repo.get!(Book, id)
+  def get_book_with_authors!(id), do: Book |> preload(:authors) |> Repo.get!(id)
 
   @doc """
   Creates a book.
@@ -146,8 +147,18 @@ defmodule Libraryr.Library do
 
   """
   def create_book(attrs \\ %{}) do
+    authors =
+    attrs["authors"]
+    |> String.split(",")
+    |> Enum.map(&String.trim(&1))
+    |> Enum.map(fn author_name ->
+      {:ok, author} = create_author(%{name: author_name})
+      author
+    end)
+
     %Book{}
     |> Book.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:authors, authors)
     |> Repo.insert()
   end
 

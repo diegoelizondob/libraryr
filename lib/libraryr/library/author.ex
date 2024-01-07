@@ -14,6 +14,6 @@ defmodule Libraryr.Library.Author do
   def changeset(author, attrs) do
     author
     |> cast(attrs, [:name, :last_name, :address])
-    |> validate_required([:name, :last_name, :address])
+    |> validate_required([:name])
   end
 end

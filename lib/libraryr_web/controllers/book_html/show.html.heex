@@ -12,6 +12,11 @@
   <:item title="Isnb"><%= @book.isbn %></:item>
   <:item title="Title"><%= @book.title %></:item>
   <:item title="Price"><%= @book.price %></:item>
+  <:item title="author name">
+    <%= for a <- @book.authors do %>
+      <%= a.name %>
+    <%= end %>
+  </:item>
 </.list>
 
 <.back navigate={~p"/books"}>Back to books</.back>
