@@ -19,7 +19,7 @@ defmodule Libraryr.Library.Book do
   def changeset(book, attrs) do
     book
     |> cast(attrs, [:isbn, :title, :price])
-    |> validate_required([:isbn, :title, :price])
+    |> validate_required([:isbn, :title])
     |> unique_constraint(:isbn, name: "books_pkey")
   end
 end

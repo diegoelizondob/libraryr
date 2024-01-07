@@ -55,6 +55,15 @@ defmodule Libraryr.Library do
     |> Repo.insert()
   end
 
+  def find_or_create_author(attrs) do
+    author = Repo.get_by(Author, name: attrs[:name] || attrs["name"], birthday: attrs[:birthday] || attrs["birthday"])
+    if author do
+      {:ok, author}
+    else
+      create_author(attrs)
+    end
+  end
+
   @doc """
   Updates a author.
 
@@ -148,13 +157,13 @@ defmodule Libraryr.Library do
   """
   def create_book(attrs \\ %{}) do
     authors =
-    attrs["authors"]
-    |> String.split(",")
-    |> Enum.map(&String.trim(&1))
-    |> Enum.map(fn author_name ->
-      {:ok, author} = create_author(%{name: author_name})
-      author
-    end)
+      attrs["authors"]
+      |> String.split(",")
+      |> Enum.chunk_every(2, 2, :discard)
+      |> Enum.map(fn [author_name, birthday] ->
+        {_status, author} = find_or_create_author(%{name: String.trim(author_name), birthday: String.trim(birthday)})
+        Author.changeset(author, %{}) |> Map.delete(:__meta__)
+      end)
 
     %Book{}
     |> Book.changeset(attrs)

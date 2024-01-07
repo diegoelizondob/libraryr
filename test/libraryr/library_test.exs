@@ -8,7 +8,7 @@ defmodule Libraryr.LibraryTest do
 
     import Libraryr.LibraryFixtures
 
-    @invalid_attrs %{name: nil, address: nil}
+    @invalid_attrs %{name: nil, birthday: nil}
 
     test "list_authors/0 returns all authors" do
       author = author_fixture()
@@ -21,11 +21,11 @@ defmodule Libraryr.LibraryTest do
     end
 
     test "create_author/1 with valid data creates a author" do
-      valid_attrs = %{name: "some name", address: "some address"}
+      valid_attrs = %{name: "some name", birthday: "some birthday"}
 
       assert {:ok, %Author{} = author} = Library.create_author(valid_attrs)
       assert author.name == "some name"
-      assert author.address == "some address"
+      assert author.birthday == "some birthday"
     end
 
     test "create_author/1 with invalid data returns error changeset" do
@@ -34,11 +34,11 @@ defmodule Libraryr.LibraryTest do
 
     test "update_author/2 with valid data updates the author" do
       author = author_fixture()
-      update_attrs = %{name: "some updated name", address: "some updated address"}
+      update_attrs = %{name: "some updated name", birthday: "some updated birthday"}
 
       assert {:ok, %Author{} = author} = Library.update_author(author, update_attrs)
       assert author.name == "some updated name"
-      assert author.address == "some updated address"
+      assert author.birthday == "some updated birthday"
     end
 
     test "update_author/2 with invalid data returns error changeset" do

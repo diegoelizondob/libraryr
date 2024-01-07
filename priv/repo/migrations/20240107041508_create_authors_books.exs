@@ -7,7 +7,6 @@ defmodule Libraryr.Repo.Migrations.CreateAuthorsBooks do
       add :isbn, references(:books, on_delete: :nothing, column: :isbn, type: :string), null: false, primary_key: true
     end
 
-    create index(:authors_books, [:author_id])
-    create index(:authors_books, [:isbn])
+    create unique_index(:authors_books, [:author_id, :isbn], name: :author_and_isbn)
   end
 end
