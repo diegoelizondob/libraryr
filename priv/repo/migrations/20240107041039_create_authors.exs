@@ -4,7 +4,6 @@ defmodule Libraryr.Repo.Migrations.CreateAuthors do
   def change do
     create table(:authors) do
       add :name, :string, null: false
-      add :last_name, :string
       add :address, :string
 
       timestamps(type: :utc_datetime)

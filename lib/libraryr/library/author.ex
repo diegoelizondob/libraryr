@@ -5,7 +5,6 @@ defmodule Libraryr.Library.Author do
   schema "authors" do
     field :name, :string
     field :address, :string
-    field :last_name, :string
 
     timestamps(type: :utc_datetime)
   end
@@ -13,7 +12,7 @@ defmodule Libraryr.Library.Author do
   @doc false
   def changeset(author, attrs) do
     author
-    |> cast(attrs, [:name, :last_name, :address])
+    |> cast(attrs, [:name, :address])
     |> validate_required([:name])
   end
 end

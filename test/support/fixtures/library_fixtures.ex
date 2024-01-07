@@ -12,7 +12,6 @@ defmodule Libraryr.LibraryFixtures do
       attrs
       |> Enum.into(%{
         address: "some address",
-        last_name: "some last_name",
         name: "some name"
       })
       |> Libraryr.Library.create_author()

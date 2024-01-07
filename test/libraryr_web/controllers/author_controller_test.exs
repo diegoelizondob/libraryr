@@ -3,9 +3,9 @@ defmodule LibraryrWeb.AuthorControllerTest do
 
   import Libraryr.LibraryFixtures
 
-  @create_attrs %{name: "some name", address: "some address", last_name: "some last_name"}
-  @update_attrs %{name: "some updated name", address: "some updated address", last_name: "some updated last_name"}
-  @invalid_attrs %{name: nil, address: nil, last_name: nil}
+  @create_attrs %{name: "some name", address: "some address"}
+  @update_attrs %{name: "some updated name", address: "some updated address"}
+  @invalid_attrs %{name: nil, address: nil}
 
   describe "index" do
     test "lists all authors", %{conn: conn} do
