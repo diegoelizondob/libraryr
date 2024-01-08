@@ -6,7 +6,7 @@ defmodule Libraryr.Library do
   import Ecto.Query, warn: false
   alias Libraryr.Repo
 
-  alias Libraryr.Library.{Author, Book}
+  alias Libraryr.Library.{Author, Book, AuthorBook}
 
   @doc """
   Returns the list of authors.
@@ -199,6 +199,18 @@ defmodule Libraryr.Library do
     |> Repo.update()
   end
 
+  def delete_author_if_no_relations_left(authors) do
+    Enum.each(authors, fn author ->
+      author_books_count =
+        from(ab in AuthorBook, where: ab.author_id == ^author.id)
+        |> Repo.aggregate(:count)
+
+      if author_books_count == 0 do
+        Repo.delete(author)
+      end
+    end)
+  end
+
   @doc """
   Deletes a book.
 
@@ -215,23 +227,12 @@ defmodule Libraryr.Library do
     # DELETE -> how to delete all relations of book (authors and author_books)
     book = get_book_with_authors!(isbn)
 
-    # Preload authors and author_books associations
-    book_with_relations =
+    # Delete authors and author_books associations
       book
       |> Repo.preload([:authors])
       |> Repo.delete()
 
-
-      ## PROBAR MAñANA
-    # # Delete book along with its associations
-    # Repo.transaction(fn ->
-    #   # Delete author_books
-    #   Enum.each(book_with_relations.authors, &Repo.delete(&1))
-    #   # Delete authors
-    #   Enum.each(book_with_relations.author_books, &Repo.delete(&1))
-    #   # Delete the book itself
-    #   Repo.delete(book_with_relations)
-    # end)
+      delete_author_if_no_relations_left(book.authors)
   end
 
   @doc """

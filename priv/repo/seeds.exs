@@ -13,7 +13,13 @@
 alias Libraryr.Library.{Book, Author}
 alias Libraryr.Repo
 
+# Create func
 # Libraryr.Library.create_book(%{"isbn" => "testisbfffn", "title" => "Book1", "authors" => [%{name: "Sofia", birthday: "sofias-bday"}, %{name: "Ricardo", birthday: "rics-bday"}]})
+
+# Delete func
+# Libraryr.Library.delete_book("testisbfffn")
+
+# SEEDS
 %Book{
   isbn: "testisbn",
   title: "Book1",
@@ -34,12 +40,13 @@ alias Libraryr.Repo
   price: 156
 } |> Repo.insert!
 
-%Book{
-  isbn: "test3isbn",
-  title: "Book1 part 2",
-  authors: [
-    %Author{name: "Sofia", birthday: "24-08-1992"},
-    %Author{name: "Ricardo", birthday: "13-11-1991"}
-  ],
-  price: 949
-} |> Repo.insert!
+# ---------- ERROR (same authors)! -----------
+# %Book{
+#   isbn: "test3isbn",
+#   title: "Book1 part 2",
+#   authors: [
+#     %Author{name: "Sofia", birthday: "24-08-1992"},
+#     %Author{name: "Ricardo", birthday: "13-11-1991"}
+#   ],
+#   price: 949
+# } |> Repo.insert!
