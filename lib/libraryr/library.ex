@@ -161,7 +161,7 @@ defmodule Libraryr.Library do
     authors =
       attrs["authors"]
       |> Enum.map(fn author ->
-        {_status, authore} = find_or_create_author(%{name: String.trim(author["name"]), birthday: String.trim(author["birthday"])})
+        {_status, authore} = find_or_create_author(%{name: String.trim(author.name), birthday: String.trim(author.birthday)})
         authore
       end)
 
@@ -187,13 +187,11 @@ defmodule Libraryr.Library do
     authors =
       attrs["authors"]
       |> Enum.map(fn author ->
-        IO.puts("author: #{inspect author}")
-        {_status, authore} = find_or_create_author(%{name: String.trim(author["name"]), birthday: String.trim(author["birthday"])})
+        {_status, authore} = find_or_create_author(%{name: String.trim(author.name), birthday: String.trim(author.birthday)})
         authore
       end)
 
     book = get_book_with_authors!(isbn)
-    IO.puts("book with isbn #{isbn}: #{inspect book}")
 
     book
     |> Book.changeset(attrs)
