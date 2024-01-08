@@ -57,10 +57,12 @@ defmodule Libraryr.Library do
 
   def find_or_create_author(attrs) do
     author = Repo.get_by(Author, name: attrs[:name] || attrs["name"], birthday: attrs[:birthday] || attrs["birthday"])
-    if author do
+
+    case author do
+      nil ->
+        create_author(attrs)
+    author ->
       {:ok, author}
-    else
-      create_author(attrs)
     end
   end
 
@@ -158,11 +160,9 @@ defmodule Libraryr.Library do
   def create_book(attrs \\ %{}) do
     authors =
       attrs["authors"]
-      |> String.split(",")
-      |> Enum.chunk_every(2, 2, :discard)
-      |> Enum.map(fn [author_name, birthday] ->
-        {_status, author} = find_or_create_author(%{name: String.trim(author_name), birthday: String.trim(birthday)})
-        Author.changeset(author, %{}) |> Map.delete(:__meta__)
+      |> Enum.map(fn author ->
+        {_status, authore} = find_or_create_author(%{name: String.trim(author["name"]), birthday: String.trim(author["birthday"])})
+        authore
       end)
 
     %Book{}
@@ -183,9 +183,21 @@ defmodule Libraryr.Library do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_book(%Book{} = book, attrs) do
+  def update_book(isbn, attrs) do
+    authors =
+      attrs["authors"]
+      |> Enum.map(fn author ->
+        IO.puts("author: #{inspect author}")
+        {_status, authore} = find_or_create_author(%{name: String.trim(author["name"]), birthday: String.trim(author["birthday"])})
+        authore
+      end)
+
+    book = get_book_with_authors!(isbn)
+    IO.puts("book with isbn #{isbn}: #{inspect book}")
+
     book
     |> Book.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:authors, authors)
     |> Repo.update()
   end
 

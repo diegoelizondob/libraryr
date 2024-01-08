@@ -13,6 +13,6 @@ defmodule Libraryr.Library.AuthorBook do
   def changeset(author_book, attrs) do
     author_book
     |> cast(attrs, [])
-    |> validate_required([])
+    |> validate_required([:isbn, :author_id])
   end
 end
