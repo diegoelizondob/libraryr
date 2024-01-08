@@ -10,16 +10,42 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias Libraryr.Library.{Book, Author}
+alias Libraryr.Library.{Book, Author, Category}
 alias Libraryr.Repo
 
 # Create func
-# Libraryr.Library.create_book(%{"isbn" => "testisbfffn", "title" => "Book1", "authors" => [%{name: "Sofia", birthday: "sofias-bday"}, %{name: "Ricardo", birthday: "rics-bday"}]})
+# Libraryr.Library.create_book(%{"isbn" => "testuniqueisbn", "title" => "Book1", "authors" => [%{name: "Sofia", birthday: "sofias-bday"}, %{name: "Ricardo", birthday: "rics-bday"}]})
+
+# Update func
+# Libraryr.Library.update_book("testuniqueisbn", %{"isbn" => "testuniqueisbn", "title" => "Bookunique", "category_id" => 3, "authors" => [%{name: "Sofiaupdated", birthday: "sofias-bday"}, %{name: "Ricardoupdated", birthday: "rics-bdasyyyy"}]})
 
 # Delete func
-# Libraryr.Library.delete_book("testisbfffn")
+# Libraryr.Library.delete_book("test2isbn")
 
-# SEEDS
+# Read func
+# Libraryr.Library.get_book_with_authors!("testuniqueisbn")
+
+# Read func
+# Libraryr.Library.list_books()
+
+# Category SEEDS
+%Category{
+  name: "Horror"
+} |> Repo.insert!
+
+%Category{
+  name: "Drama"
+} |> Repo.insert!
+
+%Category{
+  name: "Action"
+} |> Repo.insert!
+
+%Category{
+  name: "Fiction"
+} |> Repo.insert!
+
+# Book SEEDS
 %Book{
   isbn: "testisbn",
   title: "Book1",
@@ -27,6 +53,7 @@ alias Libraryr.Repo
     %Author{name: "Sofia", birthday: "24-08-1992"},
     %Author{name: "Ricardo", birthday: "13-11-1991"}
   ],
+  category_id: 2,
   price: 32
 } |> Repo.insert!
 
@@ -37,6 +64,7 @@ alias Libraryr.Repo
     %Author{name: "Juan", birthday: "23-09-1989"},
     %Author{name: "John", birthday: "01-11-1976"}
   ],
+  category_id: 1,
   price: 156
 } |> Repo.insert!
 

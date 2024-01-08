@@ -34,4 +34,18 @@ defmodule Libraryr.LibraryFixtures do
 
     book
   end
+
+  @doc """
+  Generate a category.
+  """
+  def category_fixture(attrs \\ %{}) do
+    {:ok, category} =
+      attrs
+      |> Enum.into(%{
+        name: "some name"
+      })
+      |> Libraryr.Library.create_category()
+
+    category
+  end
 end

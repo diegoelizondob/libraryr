@@ -9,5 +9,7 @@ defmodule Libraryr.Repo.Migrations.CreateBooks do
 
       timestamps(type: :utc_datetime)
     end
+
+    create index(:books, [:isbn])
   end
 end

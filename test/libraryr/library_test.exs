@@ -116,4 +116,58 @@ defmodule Libraryr.LibraryTest do
       assert %Ecto.Changeset{} = Library.change_book(book)
     end
   end
+
+  describe "cetegories" do
+    alias Libraryr.Library.Category
+
+    import Libraryr.LibraryFixtures
+
+    @invalid_attrs %{name: nil}
+
+    test "list_cetegories/0 returns all cetegories" do
+      category = category_fixture()
+      assert Library.list_cetegories() == [category]
+    end
+
+    test "get_category!/1 returns the category with given id" do
+      category = category_fixture()
+      assert Library.get_category!(category.id) == category
+    end
+
+    test "create_category/1 with valid data creates a category" do
+      valid_attrs = %{name: "some name"}
+
+      assert {:ok, %Category{} = category} = Library.create_category(valid_attrs)
+      assert category.name == "some name"
+    end
+
+    test "create_category/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Library.create_category(@invalid_attrs)
+    end
+
+    test "update_category/2 with valid data updates the category" do
+      category = category_fixture()
+      update_attrs = %{name: "some updated name"}
+
+      assert {:ok, %Category{} = category} = Library.update_category(category, update_attrs)
+      assert category.name == "some updated name"
+    end
+
+    test "update_category/2 with invalid data returns error changeset" do
+      category = category_fixture()
+      assert {:error, %Ecto.Changeset{}} = Library.update_category(category, @invalid_attrs)
+      assert category == Library.get_category!(category.id)
+    end
+
+    test "delete_category/1 deletes the category" do
+      category = category_fixture()
+      assert {:ok, %Category{}} = Library.delete_category(category)
+      assert_raise Ecto.NoResultsError, fn -> Library.get_category!(category.id) end
+    end
+
+    test "change_category/1 returns a category changeset" do
+      category = category_fixture()
+      assert %Ecto.Changeset{} = Library.change_category(category)
+    end
+  end
 end
