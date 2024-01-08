@@ -213,8 +213,12 @@ defmodule Libraryr.Library do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_book(%Book{} = book) do
-    Repo.delete(book)
+  def delete_book(isbn) do
+    # DELETE -> how to delete all relations of book (authors and author_books)
+    book = get_book_with_authors!(isbn)
+
+    book
+    |> Repo.delete()
   end
 
   @doc """
