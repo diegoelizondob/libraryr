@@ -114,6 +114,7 @@ defmodule Libraryr.Library do
   end
 
   alias Libraryr.Library.Book
+  @type book :: %Book{}
 
   @doc """
   Returns the list of books.
@@ -124,6 +125,7 @@ defmodule Libraryr.Library do
       [%Book{}, ...]
 
   """
+  @spec list_books() :: [book()]
   def list_books do
     Book |> preload(:authors) |> Repo.all()
   end
@@ -143,7 +145,9 @@ defmodule Libraryr.Library do
 
   """
   def get_book!(id), do: Repo.get!(Book, id)
-  def get_book_with_authors!(id), do: Book |> preload(:authors) |> Repo.get!(id)
+
+  @spec get_book_with_authors!(isbn :: String.t()) :: book()
+  def get_book_with_authors!(isbn), do: Book |> preload(:authors) |> Repo.get!(isbn)
 
   @doc """
   Creates a book.
@@ -157,6 +161,7 @@ defmodule Libraryr.Library do
       {:error, %Ecto.Changeset{}}
 
   """
+  @spec create_book(attrs :: %{}) :: {:ok, book()} | {:error, Ecto.Changeset.t}
   def create_book(attrs \\ %{}) do
     authors =
       attrs["authors"]
@@ -183,6 +188,7 @@ defmodule Libraryr.Library do
       {:error, %Ecto.Changeset{}}
 
   """
+  @spec update_book(isbn :: String.t(), attrs :: %{}) :: {:ok, book()} | {:error, Ecto.Changeset.t}
   def update_book(isbn, attrs) do
     authors =
       attrs["authors"]
@@ -199,6 +205,8 @@ defmodule Libraryr.Library do
     |> Repo.update()
   end
 
+
+  @spec delete_author_if_no_relations_left(authors :: [%Author{}]) :: :ok | :error
   def delete_author_if_no_relations_left(authors) do
     Enum.each(authors, fn author ->
       author_books_count =
@@ -223,6 +231,7 @@ defmodule Libraryr.Library do
       {:error, %Ecto.Changeset{}}
 
   """
+  @spec delete_book(String.t()) :: :ok
   def delete_book(isbn) do
     # DELETE -> how to delete all relations of book (authors and author_books)
     book = get_book_with_authors!(isbn)
