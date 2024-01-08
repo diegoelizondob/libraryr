@@ -5,7 +5,7 @@ defmodule Libraryr.Repo.Migrations.CreateBooks do
     create table(:books, primary_key: false) do
       add :isbn, :string, null: false, primary_key: true
       add :title, :string
-      add :price, :decimal
+      add :price, :decimal, default: 0
 
       timestamps(type: :utc_datetime)
     end
