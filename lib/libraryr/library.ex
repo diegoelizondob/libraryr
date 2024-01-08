@@ -217,8 +217,23 @@ defmodule Libraryr.Library do
     # DELETE -> how to delete all relations of book (authors and author_books)
     book = get_book_with_authors!(isbn)
 
-    book
-    |> Repo.delete()
+    # Preload authors and author_books associations
+    book_with_relations =
+      book
+      |> Repo.preload([:authors])
+      |> Repo.delete()
+
+
+      ## PROBAR MAñANA
+    # # Delete book along with its associations
+    # Repo.transaction(fn ->
+    #   # Delete author_books
+    #   Enum.each(book_with_relations.authors, &Repo.delete(&1))
+    #   # Delete authors
+    #   Enum.each(book_with_relations.author_books, &Repo.delete(&1))
+    #   # Delete the book itself
+    #   Repo.delete(book_with_relations)
+    # end)
   end
 
   @doc """
