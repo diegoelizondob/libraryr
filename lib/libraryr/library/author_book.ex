@@ -4,9 +4,8 @@ defmodule Libraryr.Library.AuthorBook do
 
   @primary_key false
   schema "authors_books" do
-
-    field :author_id, :id, primary_key: true
-    field :isbn, :string, primary_key: true
+    belongs_to :author, Libraryr.Library.Author, primary_key: true
+    belongs_to :book, Libraryr.Library.Book, primary_key: true, references: :isbn
   end
 
   @doc false
