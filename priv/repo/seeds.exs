@@ -13,19 +13,22 @@
 alias Libraryr.Library.{Book, Author, Category}
 alias Libraryr.Repo
 
-# Create func
-# Libraryr.Library.create_book(%{"isbn" => "testuniqueisbn", "title" => "Book1", "authors" => [%{name: "Sofia", birthday: "sofias-bday"}, %{name: "Ricardo", birthday: "rics-bday"}]})
+# Create Category
+# Libraryr.Library.create_category(%{"name" => "test category"})
 
-# Update func
+# Create Books
+# Libraryr.Library.create_book(%{"isbn" => "testuniqueisbn", "title" => "Book1", "category_id" => 2, "authors" => [%{name: "Sofia", birthday: "sofias-bday"}, %{name: "Ricardo", birthday: "rics-bday"}]})
+
+# Update Books
 # Libraryr.Library.update_book("testuniqueisbn", %{"isbn" => "testuniqueisbn", "title" => "Bookunique", "category_id" => 3, "authors" => [%{name: "Sofiaupdated", birthday: "sofias-bday"}, %{name: "Ricardoupdated", birthday: "rics-bdasyyyy"}]})
 
-# Delete func
+# Delete Books
 # Libraryr.Library.delete_book("test2isbn")
 
-# Read func
+# Read Books
 # Libraryr.Library.get_book_with_authors!("testuniqueisbn")
 
-# Read func
+# Read Books
 # Libraryr.Library.list_books()
 
 # Category SEEDS
