@@ -4,7 +4,7 @@ defmodule Libraryr.Repo.Migrations.CreateAuthors do
   def change do
     create table(:authors) do
       add :name, :string, null: false
-      add :birthday, :string, default: "No birthday available"
+      add :birthday, :string, default: "birthday not available"
 
       timestamps(type: :utc_datetime)
     end

@@ -20,12 +20,13 @@ defmodule LibraryrWeb.Router do
     get "/", PageController, :home
     resources "/authors", AuthorController
     resources "/books", BookController
+    resources "/categories", CategoryController
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", LibraryrWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", LibraryrWeb do
+    pipe_through :api
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:libraryr, :dev_routes) do
