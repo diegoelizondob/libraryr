@@ -14,6 +14,10 @@ defmodule LibraryrWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :graphql do
+    plug :accepts, ["json"]
+  end
+
   scope "/", LibraryrWeb do
     pipe_through :browser
 
@@ -26,6 +30,13 @@ defmodule LibraryrWeb.Router do
   # Other scopes may use custom stacks.
   scope "/api", LibraryrWeb do
     pipe_through :api
+    resources "/categories", CategoryController, except: [:new, :edit]
+  end
+
+  scope "/graphql" do
+    pipe_through :graphql
+
+    forward "/", Absinthe.Plug, schema: LibraryWeb.GraphQL.Schema
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
@@ -43,5 +54,9 @@ defmodule LibraryrWeb.Router do
       live_dashboard "/dashboard", metrics: LibraryrWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
+
+    forward "/dev/graphiql", Absinthe.Plug.GraphiQL,
+      schema: LibraryWeb.GraphQL.Schema,
+      interface: :playground
   end
 end

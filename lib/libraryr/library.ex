@@ -271,7 +271,7 @@ defmodule Libraryr.Library do
 
   """
   def list_cetegories do
-    Repo.all(Category)
+    Category |> preload(:books) |> Repo.all()
   end
 
   @doc """
