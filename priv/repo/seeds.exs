@@ -10,7 +10,7 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias Libraryr.Library.{Book, Author, Category}
+alias Libraryr.Library.{Book, Author, Category, Reader}
 alias Libraryr.Repo
 
 # Create Category
@@ -72,6 +72,18 @@ alias Libraryr.Repo
   ],
   category_id: 1,
   price: 156
+} |> Repo.insert!
+
+%Reader{
+  name: "Mariaa",
+  email: "maria.garza@mail.com",
+  book_id: "testisbn"
+} |> Repo.insert!
+
+%Reader{
+  name: "Mariaa OTro",
+  email: "maria.garza@maail.com",
+  book_id: "testisbn2"
 } |> Repo.insert!
 
 # ---------- ERROR (same authors)! -----------
