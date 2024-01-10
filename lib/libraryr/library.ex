@@ -127,7 +127,7 @@ defmodule Libraryr.Library do
   """
   @spec list_books() :: [book()]
   def list_books do
-    Book |> preload(:authors) |> Repo.all()
+    Book |> preload(:authors) |> preload(:category) |> Repo.all()
   end
 
   @doc """
