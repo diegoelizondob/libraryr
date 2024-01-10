@@ -13,7 +13,7 @@ defmodule Library.Resolvers.CategoryResolver do
   end
 
   def get_book_by_isbn(_parent, %{isbn: id}, _resolution) do
-    {:ok, Libraryr.Library.get_book!(id)}
+    {:ok, Libraryr.Library.get_book_with_authors!(id)}
   end
 
 end

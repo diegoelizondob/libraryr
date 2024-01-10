@@ -77,14 +77,14 @@ alias Libraryr.Repo
 %Reader{
   name: "Mariaa",
   email: "maria.garza@mail.com",
-  book_id: "testisbn"
+  isbn: "testisbn"
 } |> Repo.insert!
 
-%Reader{
-  name: "Mariaa OTro",
-  email: "maria.garza@maail.com",
-  book_id: "testisbn2"
-} |> Repo.insert!
+# %Reader{
+#   name: "Mariaa OTro",
+#   email: "maria.garza@maail.com",
+#   isbn: "testisbn2"
+# } |> Repo.insert!
 
 # ---------- ERROR (same authors)! -----------
 # %Book{

@@ -6,7 +6,7 @@ defmodule Libraryr.Library.Reader do
     field :name, :string
     field :email, :string
 
-    belongs_to :book, Libraryr.Library.Book, references: :isbn, type: :string
+    belongs_to :books, Libraryr.Library.Book, references: :isbn, type: :string, foreign_key: :isbn
 
     timestamps(type: :utc_datetime)
   end
@@ -16,6 +16,6 @@ defmodule Libraryr.Library.Reader do
     reader
     |> cast(attrs, [:name, :email])
     |> validate_required([:name])
-    |> foreign_key_constraint(:book_id, name: "readers_book_id_fkey")
+    |> foreign_key_constraint(:books, name: "readers_isbn_fkey")
   end
 end
