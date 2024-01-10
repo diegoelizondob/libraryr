@@ -48,4 +48,19 @@ defmodule Libraryr.LibraryFixtures do
 
     category
   end
+
+  @doc """
+  Generate a reader.
+  """
+  def reader_fixture(attrs \\ %{}) do
+    {:ok, reader} =
+      attrs
+      |> Enum.into(%{
+        email: "some email",
+        name: "some name"
+      })
+      |> Libraryr.Library.create_reader()
+
+    reader
+  end
 end

@@ -170,4 +170,60 @@ defmodule Libraryr.LibraryTest do
       assert %Ecto.Changeset{} = Library.change_category(category)
     end
   end
+
+  describe "readers" do
+    alias Libraryr.Library.Reader
+
+    import Libraryr.LibraryFixtures
+
+    @invalid_attrs %{name: nil, email: nil}
+
+    test "list_readers/0 returns all readers" do
+      reader = reader_fixture()
+      assert Library.list_readers() == [reader]
+    end
+
+    test "get_reader!/1 returns the reader with given id" do
+      reader = reader_fixture()
+      assert Library.get_reader!(reader.id) == reader
+    end
+
+    test "create_reader/1 with valid data creates a reader" do
+      valid_attrs = %{name: "some name", email: "some email"}
+
+      assert {:ok, %Reader{} = reader} = Library.create_reader(valid_attrs)
+      assert reader.name == "some name"
+      assert reader.email == "some email"
+    end
+
+    test "create_reader/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Library.create_reader(@invalid_attrs)
+    end
+
+    test "update_reader/2 with valid data updates the reader" do
+      reader = reader_fixture()
+      update_attrs = %{name: "some updated name", email: "some updated email"}
+
+      assert {:ok, %Reader{} = reader} = Library.update_reader(reader, update_attrs)
+      assert reader.name == "some updated name"
+      assert reader.email == "some updated email"
+    end
+
+    test "update_reader/2 with invalid data returns error changeset" do
+      reader = reader_fixture()
+      assert {:error, %Ecto.Changeset{}} = Library.update_reader(reader, @invalid_attrs)
+      assert reader == Library.get_reader!(reader.id)
+    end
+
+    test "delete_reader/1 deletes the reader" do
+      reader = reader_fixture()
+      assert {:ok, %Reader{}} = Library.delete_reader(reader)
+      assert_raise Ecto.NoResultsError, fn -> Library.get_reader!(reader.id) end
+    end
+
+    test "change_reader/1 returns a reader changeset" do
+      reader = reader_fixture()
+      assert %Ecto.Changeset{} = Library.change_reader(reader)
+    end
+  end
 end
