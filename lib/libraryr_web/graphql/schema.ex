@@ -3,7 +3,9 @@ defmodule LibraryWeb.GraphQL.Schema do
   The Absinthe schema for the application.
   """
   use Absinthe.Schema
-  alias Library.Resolver.CategoryResolver
+  alias Library.Resolvers.CategoryResolver
+
+  import_types Absinthe.Type.Custom
 
   query do
     @desc "Get the current user"
@@ -15,6 +17,13 @@ defmodule LibraryWeb.GraphQL.Schema do
   object :category do
     field :id, non_null(:id)
     field :name, non_null(:string)
+    field :books, list_of(:books)
+  end
+
+  object :books do
+    field :isbn, non_null(:string)
+    field :title, non_null(:string)
+    field :price, :decimal
   end
 
   # query do

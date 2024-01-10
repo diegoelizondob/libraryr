@@ -31,6 +31,9 @@ alias Libraryr.Repo
 # Read Books
 # Libraryr.Library.list_books()
 
+# Read Categories
+# Libraryr.Library.list_cetegories()
+
 # Category SEEDS
 %Category{
   name: "Horror"
