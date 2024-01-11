@@ -26,8 +26,22 @@ defmodule Library.Resolvers.CategoryResolver do
     {:ok, Libraryr.Library.get_reader!(id)}
   end
 
-  def create_reader(_parent, %{name: name, email: email}, _resolution) do
-    {:ok, Libraryr.Library.create_reader(%{name: name, email: email})}
+  def create_reader(_parent, %{name: name, email: email, isbn: isbn}, _resolution) do
+    Libraryr.Library.create_reader(%{name: name, email: email, isbn: isbn})
+  end
+
+  def delete_reader_by_id(_parent, %{id: id}, _resolution) do
+
+    result_tuple = Libraryr.Library.delete_reader_by_id(id)
+
+    case result_tuple do
+      {1, nil} ->
+        {:ok, %{message: "success, deleted reader id: #{id}."}}
+      {0, nil} ->
+        {:error, %{message: "error, id #{id} does not exist, deleted nothing."}}
+    end
+
+    #{:ok, Libraryr.Library.delete_reader_by_id(id)}
   end
   # ---------
 

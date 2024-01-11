@@ -447,6 +447,15 @@ defmodule Libraryr.Library do
     Repo.delete(reader)
   end
 
+  def delete_reader_by_id(id) do
+    # https://elixirforum.com/t/ecto-delete-a-record-without-selecting-first/20024
+    IO.puts "from(x in Reader, where: x.id == ^id)"
+    IO.inspect from(x in Reader, where: x.id == ^id)
+
+    from(x in Reader, where: x.id == ^id)
+    |> Repo.delete_all
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking reader changes.
 

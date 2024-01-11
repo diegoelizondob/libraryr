@@ -29,7 +29,7 @@ defmodule LibraryWeb.GraphQL.Schema do
       resolve &CategoryResolver.list_categories/3
     end
 
-    # - Readers actions:absinthe_parser
+    # - Readers queries:
 
     @desc "Get list of readers"
     field :readers, list_of(:reader) do
@@ -40,13 +40,6 @@ defmodule LibraryWeb.GraphQL.Schema do
     field :one_reader, :reader do
       arg :id, non_null(:id)
       resolve &CategoryResolver.get_reader_by_name/3
-    end
-
-    @desc "Create a reader"
-    field :create_reader, type: :reader do
-      arg :name, :string
-      arg :email, :string
-      resolve &CategoryResolver.create_reader/3
     end
     # ------------
   end
@@ -60,6 +53,27 @@ defmodule LibraryWeb.GraphQL.Schema do
       arg :category_id, :integer
       resolve &CategoryResolver.create_book_with_authors/3
     end
+
+    # - Readers mutations:
+    @desc "Create a reader"
+    field :create_reader, type: :reader do
+      arg :name, :string
+      arg :email, :string
+      arg :isbn, :string
+      resolve &CategoryResolver.create_reader/3
+    end
+
+    @desc "Delete one reader"
+    field :delete_reader, type: :delete_reader_obj do
+      arg :id, non_null(:id)
+      resolve &CategoryResolver.delete_reader_by_id/3
+    end
+
+    # ----------
+  end
+
+  object :delete_reader_obj do
+    field :message, :string
   end
 
   input_object :author_input do
