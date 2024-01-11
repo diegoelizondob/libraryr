@@ -16,4 +16,19 @@ defmodule Library.Resolvers.CategoryResolver do
     {:ok, Libraryr.Library.get_book_with_authors!(id)}
   end
 
+  # - Reader resolvers:
+
+  def list_readers(_parent, _args, _resolution) do
+    {:ok, Libraryr.Library.list_readers()}
+  end
+
+  def get_reader_by_name(_parent, %{id: id}, _resolution) do
+    {:ok, Libraryr.Library.get_reader!(id)}
+  end
+
+  def create_reader(_parent, %{name: name, email: email}, _resolution) do
+    {:ok, Libraryr.Library.create_reader(%{name: name, email: email})}
+  end
+  # ---------
+
 end
