@@ -56,8 +56,8 @@ defmodule Libraryr.Library do
   end
 
   def find_or_create_author(attrs) do
-    author = Repo.get_by(Author, name: attrs[:name] || attrs["name"], birthday: attrs[:birthday] || attrs["birthday"])
-
+    author = Repo.get_by(Author, name: attrs.name || attrs["name"], birthday: attrs.birthday || attrs["birthday"])
+    IO.puts("authors found in repo: #{inspect author}")
     case author do
       nil ->
         create_author(attrs)
@@ -164,16 +164,25 @@ defmodule Libraryr.Library do
   @spec create_book(attrs :: %{}) :: {:ok, book()} | {:error, Ecto.Changeset.t}
   def create_book(attrs \\ %{}) do
     authors =
-      attrs["authors"]
+      attrs.authors
       |> Enum.map(fn author ->
         {_status, authore} = find_or_create_author(%{name: String.trim(author.name), birthday: String.trim(author.birthday)})
         authore
       end)
 
+      IO.puts("authors found: #{inspect authors}")
+
+    {status, changeset} =
     %Book{}
     |> Book.changeset(attrs)
     |> Ecto.Changeset.put_assoc(:authors, authors)
     |> Repo.insert()
+
+    # absinthe no puede mostrar el changeset como mensaje de error, entonces se convierte a string
+    case status do
+      :ok -> {status, changeset}
+      :error -> {status, "hubieron errores en el changeset..."}
+    end
   end
 
   @spec delete_author_if_no_relations_left(authors :: [%Author{}]) :: :ok | :error

@@ -22,7 +22,7 @@ defmodule Libraryr.Library.Book do
     book
     |> cast(attrs, [:isbn, :title, :price, :category_id])
     |> validate_required([:isbn, :title])
-    |> unique_constraint(:isbn, name: "books_pkey")
+    |> unique_constraint(:isbn_constraint, name: "books_pkey")
     |> foreign_key_constraint(:books, name: "authors_books_isbn_fkey")
     |> foreign_key_constraint(:books, name: "books_category_id_fkey")
   end
