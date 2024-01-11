@@ -16,7 +16,6 @@ defmodule Libraryr.Library.Author do
     author
     |> cast(attrs, [:name, :birthday])
     |> validate_required([:name, :birthday])
-    |> unique_constraint(:name, name: :name_and_birthday)
-    |> unique_constraint(:birthday, name: :name_and_birthday)
+    |> unique_constraint(:authors_name_and_birthday, name: :name_and_birthday)
   end
 end

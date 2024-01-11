@@ -51,6 +51,22 @@ defmodule LibraryWeb.GraphQL.Schema do
     # ------------
   end
 
+  mutation do
+    @desc "Create a new book with authors"
+    field :create_book_with_authors, :books do
+      arg :isbn, non_null(:string)
+      arg :title, non_null(:string)
+      arg :authors, list_of(:author_input)
+      arg :category_id, :integer
+      resolve &CategoryResolver.create_book_with_authors/3
+    end
+  end
+
+  input_object :author_input do
+    field :name, non_null(:string)
+    field :birthday, :string
+  end
+
   object :author do
     field :id, non_null(:id)
     field :name, non_null(:string)

@@ -31,4 +31,9 @@ defmodule Library.Resolvers.CategoryResolver do
   end
   # ---------
 
+  def create_book_with_authors(_parent, args, _resolution) do
+    IO.puts("args of createBooks resolver: #{inspect args}")
+    Libraryr.Library.create_book(args)
+  end
+
 end

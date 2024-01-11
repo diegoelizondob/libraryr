@@ -17,7 +17,8 @@ alias Libraryr.Repo
 # Libraryr.Library.create_category(%{"name" => "test category"})
 
 # Create Books
-# Libraryr.Library.create_book(%{"isbn" => "testuniqueisbn", "title" => "Book1", "category_id" => 2, "authors" => [%{name: "Sofia", birthday: "sofias-bday"}, %{name: "Ricardo", birthday: "rics-bday"}]})
+# Libraryr.Library.create_book(%{isbn: "testuniqueisbn", title: "Book1", category_id: 2, authors: [%{name: "Sofia", birthday: "sofias-bday"}, %{name: "Ricardo", birthday: "rics-bday"}]})
+# Libraryr.Library.create_book(%{title: "titlemutated2", authors: [%{name: "Diego2", birthday: "24-08-1997s"}, %{name: "johnson2", birthday: "holas2s"}], isbn: "mutated isgssd", category_id: 2})
 
 # Update Books
 # Libraryr.Library.update_book("testuniqueisbn", %{"isbn" => "testuniqueisbn", "title" => "Bookunique", "category_id" => 3, "authors" => [%{name: "Sofiaupdated", birthday: "sofias-bday"}, %{name: "Ricardoupdated", birthday: "rics-bdasyyyy"}]})

@@ -14,7 +14,7 @@ defmodule Libraryr.Library.Reader do
   @doc false
   def changeset(reader, attrs) do
     reader
-    |> cast(attrs, [:name, :email])
+    |> cast(attrs, [:name, :email, :isbn])
     |> validate_required([:name])
     |> foreign_key_constraint(:books, name: "readers_isbn_fkey")
   end
