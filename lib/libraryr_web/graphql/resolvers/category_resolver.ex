@@ -54,7 +54,7 @@ defmodule Library.Resolvers.CategoryResolver do
     status = Libraryr.Library.delete_book(isbn)
     case status do
       :ok ->
-        {:ok, %{msg: "se borro exitosamente el libro con isbn '#{isbn}', con sus relaciones correspondientes"}}
+        {:ok, "se borro exitosamente el libro con isbn '#{isbn}', con sus relaciones correspondientes"}
       :error ->
         {:error, "hubo un error al intentar borrar el libro con isbn '#{isbn}'"}
       _ ->

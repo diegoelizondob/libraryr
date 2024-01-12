@@ -55,7 +55,7 @@ defmodule LibraryWeb.GraphQL.Schema do
     end
 
     @desc "delete a book with authors"
-    field :delete_book_with_authors, :delete_book_obj do
+    field :delete_book_with_authors, type: non_null(:string) do
       arg :isbn, non_null(:string)
       resolve &CategoryResolver.delete_book_with_authors/3
     end
