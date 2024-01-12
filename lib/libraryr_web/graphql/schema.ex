@@ -45,13 +45,19 @@ defmodule LibraryWeb.GraphQL.Schema do
   end
 
   mutation do
-    @desc "Create a new book with authors"
+    @desc "Create a book with authors"
     field :create_book_with_authors, :books do
       arg :isbn, non_null(:string)
       arg :title, non_null(:string)
       arg :authors, list_of(:author_input)
       arg :category_id, :integer
       resolve &CategoryResolver.create_book_with_authors/3
+    end
+
+    @desc "delete a book with authors"
+    field :delete_book_with_authors, :delete_book_obj do
+      arg :isbn, non_null(:string)
+      resolve &CategoryResolver.delete_book_with_authors/3
     end
 
     # - Readers mutations:
@@ -65,11 +71,15 @@ defmodule LibraryWeb.GraphQL.Schema do
 
     @desc "Delete one reader"
     field :delete_reader, type: :delete_reader_obj do
-      arg :id, non_null(:id)
+      arg :isbn, non_null(:string)
       resolve &CategoryResolver.delete_reader_by_id/3
     end
 
     # ----------
+  end
+
+  object :delete_book_obj do
+    field :msg, non_null(:string)
   end
 
   object :delete_reader_obj do

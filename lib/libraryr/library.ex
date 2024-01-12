@@ -146,8 +146,8 @@ defmodule Libraryr.Library do
   """
   def get_book!(id), do: Repo.get!(Book, id)
 
-  @spec get_book_with_authors!(isbn :: String.t()) :: book()
-  def get_book_with_authors!(isbn), do: Book |> preload(:authors) |> Repo.get!(isbn)
+  @spec get_book_with_authors(isbn :: String.t()) :: book()
+  def get_book_with_authors(isbn), do: Book |> preload(:authors) |> Repo.get_by(isbn: isbn)
 
   @doc """
   Creates a book.
@@ -194,6 +194,8 @@ defmodule Libraryr.Library do
 
       if author_books_count == 0 do
         Repo.delete(author)
+      else
+        :ok
       end
     end)
   end
@@ -219,12 +221,14 @@ defmodule Libraryr.Library do
         authore
       end)
 
-    book = get_book_with_authors!(isbn)
+    book = get_book_with_authors(isbn)
 
-    book
+    books = book
     |> Book.changeset(attrs)
     |> Ecto.Changeset.put_assoc(:authors, authors)
     |> Repo.update()
+
+    IO.puts("books deleted? : #{inspect books}")
 
     delete_author_if_no_relations_left(book.authors)
   end
@@ -244,15 +248,18 @@ defmodule Libraryr.Library do
   """
   @spec delete_book(String.t()) :: :ok
   def delete_book(isbn) do
-    # DELETE -> how to delete all relations of book (authors and author_books)
-    book = get_book_with_authors!(isbn)
+    book = get_book_with_authors(isbn)
 
-    # Delete authors and author_books associations
+    case book do
+      nil -> :error
+    book ->
       book
       |> Repo.preload([:authors])
+      |> Repo.preload([:readers])
       |> Repo.delete()
 
       delete_author_if_no_relations_left(book.authors)
+    end
   end
 
   @doc """

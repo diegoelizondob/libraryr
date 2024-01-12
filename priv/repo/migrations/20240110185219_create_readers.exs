@@ -5,7 +5,7 @@ defmodule Libraryr.Repo.Migrations.CreateReaders do
     create table(:readers) do
       add :name, :string
       add :email, :string
-      add :isbn, references(:books, on_delete: :nothing, column: :isbn, type: :string)
+      add :isbn, references(:books, on_delete: :delete_all, column: :isbn, type: :string)
 
       timestamps(type: :utc_datetime)
     end

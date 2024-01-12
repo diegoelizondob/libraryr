@@ -13,7 +13,7 @@ defmodule Library.Resolvers.CategoryResolver do
   end
 
   def get_book_by_isbn(_parent, %{isbn: id}, _resolution) do
-    {:ok, Libraryr.Library.get_book_with_authors!(id)}
+    {:ok, Libraryr.Library.get_book_with_authors(id)}
   end
 
   # - Reader resolvers:
@@ -50,4 +50,15 @@ defmodule Library.Resolvers.CategoryResolver do
     Libraryr.Library.create_book(args)
   end
 
+  def delete_book_with_authors(_parent, %{isbn: isbn}, _resolution) do
+    status = Libraryr.Library.delete_book(isbn)
+    case status do
+      :ok ->
+        {:ok, %{msg: "se borro exitosamente el libro con isbn '#{isbn}', con sus relaciones correspondientes"}}
+      :error ->
+        {:error, "hubo un error al intentar borrar el libro con isbn '#{isbn}'"}
+      _ ->
+        {:error, "algo sucedio mal..."}
+      end
+  end
 end

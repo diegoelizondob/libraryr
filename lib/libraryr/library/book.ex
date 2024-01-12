@@ -13,6 +13,7 @@ defmodule Libraryr.Library.Book do
                   join_keys: [isbn: :isbn, author_id: :id], on_replace: :delete
 
     belongs_to :category, Libraryr.Library.Category
+    has_many :readers, Libraryr.Library.Reader, references: :isbn, on_replace: :delete, foreign_key: :isbn
 
     timestamps(type: :utc_datetime)
   end

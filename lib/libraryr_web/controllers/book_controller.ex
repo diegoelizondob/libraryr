@@ -27,7 +27,7 @@ defmodule LibraryrWeb.BookController do
   end
 
   def show(conn, %{"id" => id}) do
-    book = Library.get_book_with_authors!(id)
+    book = Library.get_book_with_authors(id)
     render(conn, :show, book: book)
   end
 
@@ -38,7 +38,7 @@ defmodule LibraryrWeb.BookController do
   end
 
   def update(conn, %{"id" => id, "book" => book_params}) do
-    book = Library.get_book_with_authors!(id)
+    book = Library.get_book_with_authors(id)
 
     case Library.update_book(book, book_params) do
       {:ok, book} ->

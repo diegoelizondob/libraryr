@@ -27,7 +27,7 @@ alias Libraryr.Repo
 # Libraryr.Library.delete_book("test2isbn")
 
 # Read Books
-# Libraryr.Library.get_book_with_authors!("testuniqueisbn")
+# Libraryr.Library.get_book_with_authors("testuniqueisbn")
 
 # Read Books
 # Libraryr.Library.list_books()
