@@ -5,6 +5,7 @@ defmodule Library.Resolvers.CategoryResolver do
   end
 
   def list_authors(_parent, _args, _resolution) do
+    IO.puts "foo" ; :timer.sleep(5000); IO.puts "bar"
     {:ok, Libraryr.Library.list_authors()}
   end
 

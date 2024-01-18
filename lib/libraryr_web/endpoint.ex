@@ -32,6 +32,14 @@ defmodule LibraryrWeb.Endpoint do
     plug Phoenix.Ecto.CheckRepoStatus, otp_app: :libraryr
   end
 
+  if Mix.env() == :dev do
+    plug CORSPlug,
+      origin: "http://localhost:3000",
+      methods: ~w(GET POST OPTIONS),
+      headers: ~w(accept authorization content-type),
+      max_age: 86400
+  end
+
   plug Phoenix.LiveDashboard.RequestLogger,
     param_key: "request_logger",
     cookie_key: "request_logger"
