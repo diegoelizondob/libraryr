@@ -6,7 +6,8 @@ defmodule Library.Resolvers.CategoryResolver do
 
   def list_authors(_parent, _args, _resolution) do
     IO.puts "foo" ; :timer.sleep(5000); IO.puts "bar"
-    {:ok, Libraryr.Library.list_authors()}
+    authors = Libraryr.Library.list_authors()
+    {:ok, authors}
   end
 
   def list_books(_parent, _args, _resolution) do
@@ -48,7 +49,15 @@ defmodule Library.Resolvers.CategoryResolver do
 
   def create_book_with_authors(_parent, args, _resolution) do
     IO.puts("args of createBooks resolver: #{inspect args}")
-    Libraryr.Library.create_book(args)
+    book_created = Libraryr.Library.create_book(args)
+    authors = Libraryr.Library.list_authors()
+
+    Absinthe.Subscription.publish(
+      LibraryrWeb.Endpoint,
+      authors,
+      authors_change: :authors_change
+    )
+    book_created
   end
 
   def delete_book_with_authors(_parent, %{isbn: isbn}, _resolution) do

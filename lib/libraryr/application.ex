@@ -17,7 +17,8 @@ defmodule Libraryr.Application do
       # Start a worker by calling: Libraryr.Worker.start_link(arg)
       # {Libraryr.Worker, arg},
       # Start to serve requests, typically the last entry
-      LibraryrWeb.Endpoint
+      LibraryrWeb.Endpoint,
+      {Absinthe.Subscription, LibraryrWeb.Endpoint}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

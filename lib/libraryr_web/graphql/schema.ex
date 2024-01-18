@@ -78,6 +78,16 @@ defmodule LibraryWeb.GraphQL.Schema do
     # ----------
   end
 
+  subscription do
+    @desc "subscribe to changes to  authors"
+    field :authors_change, list_of(:author) do
+      config fn _args, _res ->
+        IO.puts "were here!!!!"
+        {:ok, topic: :authors_change}
+      end
+    end
+  end
+
   object :delete_book_obj do
     field :msg, non_null(:string)
   end

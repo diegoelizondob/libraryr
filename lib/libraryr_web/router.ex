@@ -36,7 +36,7 @@ defmodule LibraryrWeb.Router do
   scope "/graphql" do
     pipe_through :graphql
 
-    forward "/", Absinthe.Plug, schema: LibraryWeb.GraphQL.Schema
+    forward "/", Absinthe.Plug, schema: LibraryWeb.GraphQL.Schema, socket: LibraryrWeb.UserSocket
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
@@ -57,6 +57,7 @@ defmodule LibraryrWeb.Router do
 
     forward "/dev/graphiql", Absinthe.Plug.GraphiQL,
       schema: LibraryWeb.GraphQL.Schema,
+      socket: LibraryrWeb.UserSocket,
       interface: :playground
   end
 end
