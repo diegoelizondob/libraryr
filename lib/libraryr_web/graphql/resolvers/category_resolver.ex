@@ -29,7 +29,13 @@ defmodule Library.Resolvers.CategoryResolver do
   end
 
   def create_reader(_parent, %{name: name, email: email, isbn: isbn}, _resolution) do
-    Libraryr.Library.create_reader(%{name: name, email: email, isbn: isbn})
+    reader=Libraryr.Library.create_reader(%{name: name, email: email, isbn: isbn})
+    Absinthe.Subscription.publish(
+      LibraryrWeb.Endpoint,
+      reader,
+      authors_change: :authors_change
+    )
+    reader
   end
 
   def delete_reader_by_id(_parent, %{id: id}, _resolution) do
